@@ -128,7 +128,7 @@ isi zone zones view zonehdp
 Replace the zoneid in the following command and execute it.
 
 <pre> 
-isi_run -z <zoneid>  "chown -R hdfs /ifs/isitest/zonehdp/hadoop
+isi_run -z zoneid  "chown -R hdfs /ifs/isitest/zonehdp/hadoop
 </pre> 
 
 You will deploy Hortonworks HDP Hadoop using the standard process defined by Hortonworks. Ambari Server allows for the immediate usage of an Isilon cluster for all HDFS services (NameNode and DataNode), no reconfiguration will be necessary once the HDP install is completed.
@@ -204,46 +204,55 @@ Password: admin
 
 
 + Login to Ambari Server.
-3.	Welcome: Specify the name of your cluster hdpdemo.
-4.	Select Stack: Select the HDP 2.3 stack.
-5.	Install Options:
++ Welcome: Specify the name of your cluster. Lets call it <b>hdpdemo<b>
+
+Click Next
+
++ Select Stack: Select the HDP 2.3 stack.
+
+### Install Options:
+
 Specify your Linux hosts that will run HDP for your HDP cluster installation in the Target Hosts text box and the Isilon Zone Name Node IP Address.
 Choose Perform Manual install
 Click Next. You may see a warnings. Ignore them.
-6.        Choose Services: 
+
+### Choose Services: 
 Select all the services. There are more services in HDP 2.3 than in this screenshot
 
+### Assign Masters:
 
++ Assign NameNode and SNameNode components to the Isilon. 
++ Assign the rest of the nodes to HDP components
 
-6. Assign Masters:
-
-Assign NameNode and SNameNode components to the Isilon. 
-Assign the rest of the nodes to HDP components
-
-7. Assign Slaves and Clients: 
+### Assign Slaves and Clients: 
 
 Assign the DataNode to Isilon host (No Client)
 Rest of the components are assigned to the Compute node (HDP Sandbox)
 
-8. Customize the services
-Change the port for webhdfs to 8082 under HDFS
+### Customize the services
+
++ Change the port for webhdfs to 8082 under HDFS
+<pre>
 dfs.namenode.http-address = <hostname>:8082
-Enter the password for all the required services
+</pre>
 
-1.	Review: Carefully review your configuration and then click Deploy.
++ Enter the password for all the required services
+
++ Review: Carefully review your configuration and then click Deploy.
  
-2.	After a successful installation, Ambari will start and test all of the selected services.  Sometime it may fail for the first time around. You may need to retry couple of times. Review the Install, Start and Test page for any warnings or errors. It is recommended to correct any warnings or errors before continuing.
++ After a successful installation, Ambari will start and test all of the selected services.  Sometime it may fail for the first time around. You may need to retry couple of times. Review the Install, Start and Test page for any warnings or errors. It is recommended to correct any warnings or errors before continuing.
 
-
-
-Validation
+### Validation
 
 Login to Ambari using admin/admin
 Under MapReduce, run the “Service Check”
 
 
-This will ensure that the service is up and running.
-	
+
+# Thank You!
+
+Issues - Email sdutta@hortonworks.com
+
 
 
 	
