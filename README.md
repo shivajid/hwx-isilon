@@ -59,7 +59,7 @@ The first step we will do in the simulator is to create zone. We will use this z
 #### Create a Zone
 
 + Decide on a Zone Name. Ensure that the new zone that you want to create does not exist.
-+ For the purpose of example we will call the zone “zonehdp”. You can name it to your organization’s liking. Replace it with the version name that you want to assign.
++ For the purpose of example we will call the zone <b>“zonehdp”</b>. You can name it to your organization’s liking. Replace it with the version name that you want to assign.
 
 <pre> 
 hwxisi1-1# isi zone zones list
@@ -79,7 +79,7 @@ hwxisi1-1# mkdir -p /ifs/isitest/zonehdp
 
 + Associate an IP address pool with the zone. In this step you are creating the pool.   In this step replace the pool name, ip address range and zonename to an appropriate value.
 <pre>
-hwxisi1-1# isi networks create pool --name subnet0:poolhdp --ranges 172.18.150.110-172.18.150.119 --access-zone zonehdp --access-zone zonehdp --ifaces=1:ext-1
+hwxisi1-1# isi networks create pool --name subnet0:__REPLACE__poolhdp --ranges __REPLACE__172.18.150.110-__REPLACE__172.18.150.119 --access-zone __REPLACE__zonehdp --ifaces=1:ext-1
 </pre>
 
 Create the HDFS root directory. This is usually called "hadoop" and must be within the access zone directory. Set the HDFS root directory for the access zone.Create an indicator file so that we can easily determine when we are looking your Isilon cluster via HDFS.
@@ -195,7 +195,7 @@ Run the scripts
 
 The next steps is use the Ambari Install to install HDP.
 
-+ Browse to http://<ambari-host>:8080/.
++ Browse to http://__REPLACE__$ambarihost:8080/.
 + Login using the following account:
 <pre>
 Username: admin
