@@ -48,7 +48,7 @@ Install the 30 day temporary key for Isilon Simulator
 + Login to isilon simulator VM as a root user
 
 <pre>
-isi activate license ILLEG-ALC2V-GPS5T-RSMGT-5XMGD
+isi license activate  ILLEG-ALC2V-GPS5T-RSMGT-5XMGD
 </pre>
 
 ### Setting up a zone for HDFS
