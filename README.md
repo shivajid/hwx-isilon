@@ -157,7 +157,7 @@ In this step we will start creating the HDP Compute Cluster. We will create VM w
 
 #### Setup the CentOS VM.
 
-+ Download the CentOS 6.5 Iso
++ Download the CentOS 6.7 Iso
 https://www.dropbox.com/s/njx0zwmic7og6db/CentOS-6.7-x86_64-bin-DVD1.iso?dl=0
 
 Use the iso to create an new VM. Assign an admin user and password. You should be able to use the same password for your <b>root</b> user.
