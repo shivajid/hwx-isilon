@@ -180,7 +180,7 @@ Assign a hostname to your machine (I will use hdpdemo.hortonworks.com)
 	$ hostname hdpdemo.hortonworks.com
 	$ vi /etc/hosts
 		Map the ipaddress in step a to the hostname
-	$ vi /etc/security/sysconfig
+	$ vi /etc/sysconfig/network
 </pre>
 
 + Download the following scripts. This helps in automated deployment of Ambari and its agents.
