@@ -136,8 +136,8 @@ You will deploy Hortonworks HDP Hadoop using the standard process defined by Hor
 #### Configure the Ambari Agent on Isilon. (You can do this now or later. If you do not have the IP address of the Ambari Server)
 
 <pre>
-isiloncluster1-1# isi zone zones modify zonehdp --hdfs-ambari-namenode  \<\smartconnectip/ip from ip pool\>\
-isiloncluster1-1# isi zone zones modify zonehdp --hdfs-ambari-server <hostname/ip of the ambari server>
+isiloncluster1-1# isi zone zones modify zonehdp --hdfs-ambari-namenode  \<smartconnectip/ip from ip pool\>
+isiloncluster1-1# isi zone zones modify zonehdp --hdfs-ambari-server \<hostname/ip of the ambari server\>
 </pre>
 
 
