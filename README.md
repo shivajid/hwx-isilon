@@ -47,9 +47,9 @@ Instructions to  apply the patch
 Install the 30 day temporary key for Isilon Simulator
 
 + Login to isilon simulator VM as a root user
-
-    isi activate license ILLEG-ALC2V-GPS5T-RSMGT-5XMGD
-
+<pre>
+isi activate license ILLEG-ALC2V-GPS5T-RSMGT-5XMGD
+</pre>
 
 ### Setting up a zone for HDFS
 
@@ -57,13 +57,16 @@ Create a Zone
 
 + Decide on a Zone Name. Ensure that the new zone that you want to create does not exist.
 + For the purpose of example we will call the zone “zonehdp”. You can name it to your organization’s liking. Replace it with the version name that you want to assign.
- 
-    hwxisi1-1# isi zone zones list
- 
+<pre> 
+hwxisi1-1# isi zone zones list
+ </pre>
+
 /ifs is the default share across the nodes. Create a new directory for your zone under a directory “isitest”. 
 isitest is just another hierarchy for the documentation purpose.
- 
-    hwxisi1-1# mkdir -p /ifs/isitest/zonehdp
+
+<pre> 
+hwxisi1-1# mkdir -p /ifs/isitest/zonehdp
+</pre>
       
 Create the zone
  
@@ -74,64 +77,76 @@ Attach a pool of ip addresses to the zone - Associate an IP address pool with th
     hwxisi1-1# isi networks create pool --name subnet0:poolhdp --ranges 172.18.150.110-172.18.150.119 --access-zone zonehdp --access-zone zonehdp --ifaces=1:ext-1
 
 
-Create the HDFS root directory. This is usually called hadoop and must be within the access zone directory.
+Create the HDFS root directory. This is usually called "hadoop" and must be within the access zone directory. Set the HDFS root directory for the access zone.Create an indicator file so that we can easily determine when we are looking your Isilon cluster via HDFS.
  
-Set the HDFS root directory for the access zone
- 
-Create an indicator file so that we can easily determine when we are looking your Isilon cluster via HDFS.
- 
- 
+<pre> 
 hwxisi1-1# mkdir -p /ifs/isitest/zonehdp/hadoop
  
 hwxisi1-1# isi zone zones modify zonehdp --hdfs-root-directory /ifs/isitest/zonehdp/hadoop;
  
 hwxisi1-1# touch /ifs/isitest/zonehdp/hadoop/THIS_IS_ISILON_isitest_zonehdp
+</pre>
+
+Check the hdfs thread settings and Block Size. If it is not set, set it using the isilon documentation in the appendix. . This is a one time activity
  
- Check the hdfs thread settings and Block Size. If it is not set, set it using the isilon documentation in the appendix. . This is a one time activity
- 
- 
+<pre> 
 hwxisi1-1# isi hdfs settings modify --server-threads 256
 hwxisi1-1# isi hdfs settings modify --default-block-size 128M
+</pre>
 
-
-  Create the users and directories  
+Create the users and directories  
   
-  Download the following script and execute it by passing the zonename - https://www.dropbox.com/s/ff0eaivlef8947m/isilon_create_user.sh?dl=0
++ Download the following script and execute it by passing the zonename - https://www.dropbox.com/s/ff0eaivlef8947m/isilon_create_user.sh?dl=0
+
+<pre>
   hwxisi1-1# chmod + x isilon_create_user.sh
   hwxisi1-1# ./isilon_create_user.sh <zonename>
+</pre>
 
 Extract the Isilon Hadoop Tools to your Isilon cluster. This can be placed in any directory under /ifs. It is recommended to use /ifs/isiloncluster1/scripts where isiloncluster1 is the name of your Isilon cluster·  
- 	 
+
+<pre> 	 
     hwxisi1-1# bash /ifs/isitest/scripts/isilon-hadoop-tools/onefs/isilon_create_directories.sh --dist hwx --fixperm --zone zonehdp
-  
+</pre>
+
 Execute the following additonal steps for a temporary bug :-
 
 isi zone zones view zonehdp
 
 Get the ZoneID from the following
- 
+<pre> 
 isi zone zones view zonehdp
- 
+</pre> 
+
 Replace the zoneid in the following command and execute it.
- 
+
+<pre> 
 isi_run -z <zoneid>  "chown -R hdfs /ifs/isitest/zonehdp/hadoop
- 
+</pre> 
+
+You will deploy Hortonworks HDP Hadoop using the standard process defined by Hortonworks. Ambari Server allows for the immediate usage of an Isilon cluster for all HDFS services (NameNode and DataNode), no reconfiguration will be necessary once the HDP install is completed.
+
++ Configure the Ambari Agent on Isilon. (You can do this now or later. If you do not have the IP address of the Ambari Server)
+
+<pre>
+isiloncluster1-1# isi zone zones modify zonehdp --hdfs-ambari-namenode \ <smartconnectip/ip from ip pool>
+isiloncluster1-1# isi zone zones modify zonehdp --hdfs-ambari-server <hostname/ip of the ambari server>
+</pre>
 
 
 Restart Services
 The command below will restart the HDFS service on Isilon to ensure that any cached user mapping rules are flushed. This will temporarily interrupt any HDFS connections coming from other Hadoop clusters
- 
+
+<pre> 
 hwxisi1-1# isi services isi_hdfs_d disable ; isi services isi_hdfs_d enable
- 
+</pre> 
 
-
-
-HDP CentOS Node
-OS setup
+## HDP CentOS Node
+### OS setup
 
 Setup the CentOS VM.
 
-Download the CentOS 6.5 Iso
++ Download the CentOS 6.5 Iso
 https://www.dropbox.com/s/njx0zwmic7og6db/CentOS-6.7-x86_64-bin-DVD1.iso?dl=0
 
 Use the iso to create an new VM
@@ -139,39 +154,46 @@ Assign an admin user and password. You should be able to use the same password f
 
 Next Steps use the following Scripts to create single node VM. Once you have the centos up and running, get the IP address of the machine.
 
-Installation Steps
+### Installation Steps
 
-ssh into the machine as root. Get the ipaddress of the machine
++ ssh into the machine as root. Get the ipaddress of the machine
+<pre>
 	$ ifconfig
+</pre>
 
-      b. Assign a hostname to your machine (I will use hdpdemo.hortonworks.com)
+Assign a hostname to your machine (I will use hdpdemo.hortonworks.com)
+<pre>
 	$ hostname hdpdemo.hortonworks.com
 	$ vi /etc/hosts
 		Map the ipaddress in step a to the hostname
 	$ vi /etc/security/sysconfig
+</pre>
 
-    c. Download the following scripts. This helps in automated deployment of Ambari and its agents.
++ Download the following scripts. This helps in automated deployment of Ambari and its agents.
+<pre>
 	wget https://www.dropbox.com/s/s91lintb4xhrqic/ambariInstall.sh?dl=0 -O ambariInstall.sh
+	$ chmod +x ambariInstall.sh
+</pre>
 
-$ chmod +x ambariInstall.sh
-
-   d.  Run the scripts
+Run the scripts
+<pre>
 	$ ./ambariInstall.sh
+</pre>
 
- The above scripts installs Ambari Server and the agent and starts up the ambari server. If you do not want to run the above steps you can do it manually by following the documentation from http://docs.hortonworks.com.
+###### Note:- The above scripts installs Ambari Server and the agent and starts up the ambari server. If you do not want to run the above steps you can do it manually by following the documentation from http://docs.hortonworks.com.
 
 The next steps is use the Ambari Install to install HDP.
 
-1.	Browse to http://<ambari-host>:8080/.
-2.	Login using the following account:
++ Browse to http://<ambari-host>:8080/.
++ Login using the following account:
+<pre>
 Username: admin
 Password: admin
+</pre>
  
-Deploy a Hortonworks Hadoop Cluster with Isilon for HDFS
-You will deploy Hortonworks HDP Hadoop using the standard process defined by Hortonworks. Ambari Server allows for the immediate usage of an Isilon cluster for all HDFS services (NameNode and DataNode), no reconfiguration will be necessary once the HDP install is completed.
-1.	Configure the Ambari Agent on Isilon.
-isiloncluster1-1# isi zone zones modify zonehdp --hdfs-ambari-namenode \ <smartconnectip/ip from ip pool>
- isiloncluster1-1# isi zone zones modify zonehdp --hdfs-ambari-server <hostname/ip of the ambari server>
+#### Deploy a Hortonworks Hadoop Cluster with Isilon for HDFS
+
+
 2.	Login to Ambari Server.
 3.	Welcome: Specify the name of your cluster hdpdemo.
 4.	Select Stack: Select the HDP 2.3 stack.
