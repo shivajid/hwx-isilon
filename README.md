@@ -22,8 +22,7 @@ Following steps are for setting up the simulator :-
 
 ### Step 1
 
-Download the simulator and follow the install guide for Simulator to set it up. 
-This sets up the isilon with System zone.
+Download the simulator and follow the install guide for Simulator to set it up. This sets up the isilon with "System" zone. Later on we will create a custom zone which we will attach HDP.
 	
 Please read and follow the instructions to setup the simulator.
 It is important that you follow the instructions to the dot to create the networking correctly. 
@@ -47,19 +46,24 @@ Instructions to  apply the patch
 Install the 30 day temporary key for Isilon Simulator
 
 + Login to isilon simulator VM as a root user
+
 <pre>
 isi activate license ILLEG-ALC2V-GPS5T-RSMGT-5XMGD
 </pre>
 
 ### Setting up a zone for HDFS
 
-Create a Zone
+The first step we will do in the simulator is to create zone. We will use this zone to connect HDP Compute Node. The zone will act as the HDFS layer for our hadoop cluster.
+
+
+#### Create a Zone
 
 + Decide on a Zone Name. Ensure that the new zone that you want to create does not exist.
 + For the purpose of example we will call the zone “zonehdp”. You can name it to your organization’s liking. Replace it with the version name that you want to assign.
+
 <pre> 
 hwxisi1-1# isi zone zones list
- </pre>
+</pre>
 
 /ifs is the default share across the nodes. Create a new directory for your zone under a directory “isitest”. 
 isitest is just another hierarchy for the documentation purpose.
@@ -68,14 +72,15 @@ isitest is just another hierarchy for the documentation purpose.
 hwxisi1-1# mkdir -p /ifs/isitest/zonehdp
 </pre>
       
-Create the zone
- 
++ This step will create the zone
+<pre> 
     hwxisi1-1# isi zone zones create --name zonehdp --path /ifs/isitest/zonehdp
-  
-Attach a pool of ip addresses to the zone - Associate an IP address pool with the zone. In this step you are creating the pool. Get the pool from your Isilon Admin.  In this step replace the pool name, ip address range and zonename to an appropriate value.
+</pre>  
 
-    hwxisi1-1# isi networks create pool --name subnet0:poolhdp --ranges 172.18.150.110-172.18.150.119 --access-zone zonehdp --access-zone zonehdp --ifaces=1:ext-1
-
++ Associate an IP address pool with the zone. In this step you are creating the pool.   In this step replace the pool name, ip address range and zonename to an appropriate value.
+<pre>
+hwxisi1-1# isi networks create pool --name subnet0:poolhdp --ranges 172.18.150.110-172.18.150.119 --access-zone zonehdp --access-zone zonehdp --ifaces=1:ext-1
+</pre>
 
 Create the HDFS root directory. This is usually called "hadoop" and must be within the access zone directory. Set the HDFS root directory for the access zone.Create an indicator file so that we can easily determine when we are looking your Isilon cluster via HDFS.
  
@@ -110,10 +115,12 @@ Extract the Isilon Hadoop Tools to your Isilon cluster. This can be placed in an
 </pre>
 
 Execute the following additonal steps for a temporary bug :-
-
+<pre>
 isi zone zones view zonehdp
+</pre>
 
 Get the ZoneID from the following
+
 <pre> 
 isi zone zones view zonehdp
 </pre> 
@@ -126,7 +133,7 @@ isi_run -z <zoneid>  "chown -R hdfs /ifs/isitest/zonehdp/hadoop
 
 You will deploy Hortonworks HDP Hadoop using the standard process defined by Hortonworks. Ambari Server allows for the immediate usage of an Isilon cluster for all HDFS services (NameNode and DataNode), no reconfiguration will be necessary once the HDP install is completed.
 
-+ Configure the Ambari Agent on Isilon. (You can do this now or later. If you do not have the IP address of the Ambari Server)
+#### Configure the Ambari Agent on Isilon. (You can do this now or later. If you do not have the IP address of the Ambari Server)
 
 <pre>
 isiloncluster1-1# isi zone zones modify zonehdp --hdfs-ambari-namenode \ <smartconnectip/ip from ip pool>
@@ -134,7 +141,7 @@ isiloncluster1-1# isi zone zones modify zonehdp --hdfs-ambari-server <hostname/i
 </pre>
 
 
-Restart Services
+#### Restart Services
 The command below will restart the HDFS service on Isilon to ensure that any cached user mapping rules are flushed. This will temporarily interrupt any HDFS connections coming from other Hadoop clusters
 
 <pre> 
@@ -142,21 +149,23 @@ hwxisi1-1# isi services isi_hdfs_d disable ; isi services isi_hdfs_d enable
 </pre> 
 
 ## HDP CentOS Node
+In this step we will start creating the HDP Compute Cluster. We will create VM with CentOS 7. Deploy HDP 2.3 and connect to Isilon. We will create VM from CentOS iso.
+
 ### OS setup
 
-Setup the CentOS VM.
+#### Setup the CentOS VM.
 
 + Download the CentOS 6.5 Iso
 https://www.dropbox.com/s/njx0zwmic7og6db/CentOS-6.7-x86_64-bin-DVD1.iso?dl=0
 
-Use the iso to create an new VM
-Assign an admin user and password. You should be able to use the same password for your root user
+Use the iso to create an new VM. Assign an admin user and password. You should be able to use the same password for your <b>root</b> user.
 
 Next Steps use the following Scripts to create single node VM. Once you have the centos up and running, get the IP address of the machine.
 
 ### Installation Steps
 
 + ssh into the machine as root. Get the ipaddress of the machine
+
 <pre>
 	$ ifconfig
 </pre>
@@ -180,7 +189,7 @@ Run the scripts
 	$ ./ambariInstall.sh
 </pre>
 
-###### Note:- The above scripts installs Ambari Server and the agent and starts up the ambari server. If you do not want to run the above steps you can do it manually by following the documentation from http://docs.hortonworks.com.
+###### [Note:- The above scripts installs Ambari Server and the agent and starts up the ambari server. If you do not want to run the above steps you can do it manually by following the documentation from http://docs.hortonworks.com.]
 
 The next steps is use the Ambari Install to install HDP.
 
@@ -194,7 +203,7 @@ Password: admin
 #### Deploy a Hortonworks Hadoop Cluster with Isilon for HDFS
 
 
-2.	Login to Ambari Server.
++ Login to Ambari Server.
 3.	Welcome: Specify the name of your cluster hdpdemo.
 4.	Select Stack: Select the HDP 2.3 stack.
 5.	Install Options:
