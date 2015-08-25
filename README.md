@@ -6,10 +6,11 @@ In this lab we are going to setup a non secure cluster with Isilon 7.2.0.4 and H
 
 [Note: Ambari 2.1/HDP 2.3 with Isilon 7.2.0.4 is a preview feature only. The isilon patch shared in this lab is only for lab exercise]
 
-*In this lab you will install 2 VMs
-*Isilon Simulator 7.2.0.3
-*Then apply the patch for 7.2.0.4. [This allows for installation of Ambari 2.1]
-*HDP 2.3 with Ambari 2.1 on CentOS 6.7
+##### In this lab you will install 2 VMs
+
++ Isilon Simulator 7.2.0.3
++ Then apply the patch for 7.2.0.4. [This allows for installation of Ambari 2.1]
++ HDP 2.3 with Ambari 2.1 on CentOS 6.7
 
 ## Assumption
 
@@ -21,27 +22,31 @@ Following steps are for setting up the simulator :-
 
 ### Step 1
 
-Download the simulator and follow the install guide for Simulator to set it up. This sets up the isilon with System zone.
+Download the simulator and follow the install guide for Simulator to set it up. 
+This sets up the isilon with System zone.
 	
 Please read and follow the instructions to setup the simulator.
 It is important that you follow the instructions to the dot to create the networking correctly. 
 
 	
-Isilon 7.2.0.3 Simulator - https://www.dropbox.com/s/pdfk57upckpofdg/EMC_Isilon_OneFS_7.2.0.3_Simulator.zip?dl=0
-Simulator install and setup guide - https://www.dropbox.com/s/0pw6gv9prplux4e/Isilon_OneFS_Simulator_Guide.pdf?dl=0
++ Isilon 7.2.0.3 Simulator - https://www.dropbox.com/s/pdfk57upckpofdg/EMC_Isilon_OneFS_7.2.0.3_Simulator.zip?dl=0
++ Simulator install and setup guide - https://www.dropbox.com/s/0pw6gv9prplux4e/Isilon_OneFS_Simulator_Guide.pdf?dl=0
 
 ### Step 2
-	Apply the 7.2.0.4 patch
 
-###Download the patch from https://www.dropbox.com/s/d377sftchwpc6i6/patch-hdfs-7-2-0-3-to-7-2-0-4-preview-1.tgz?dl=0
+Apply the 7.2.0.4 patch
+
++ Download the patch from https://www.dropbox.com/s/d377sftchwpc6i6/patch-hdfs-7-2-0-3-to-7-2-0-4-preview-1.tgz?dl=0
 
 Instructions to  apply the patch
-		Follow the README file to apply the patch - https://www.dropbox.com/s/h3pdmye6cp69asq/README%20%281%29?dl=0
+
++ Follow the README file to apply the patch - https://www.dropbox.com/s/h3pdmye6cp69asq/README%20%281%29?dl=0
 
 ### Step 3
 
 Install the 30 day temporary key for Isilon Simulator
-Login to isilon simulator VM as a root user
+
++ Login to isilon simulator VM as a root user
 
     isi activate license ILLEG-ALC2V-GPS5T-RSMGT-5XMGD
 
@@ -50,8 +55,8 @@ Login to isilon simulator VM as a root user
 
 Create a Zone
 
-*Decide on a Zone Name. Ensure that the new zone that you want to create does not exist.
-*For the purpose of example we will call the zone “zonehdp”. You can name it to your organization’s liking. Replace it with the version name that you want to assign.
++ Decide on a Zone Name. Ensure that the new zone that you want to create does not exist.
++ For the purpose of example we will call the zone “zonehdp”. You can name it to your organization’s liking. Replace it with the version name that you want to assign.
  
     hwxisi1-1# isi zone zones list
  
