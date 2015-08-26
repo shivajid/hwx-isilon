@@ -187,7 +187,7 @@ change hostname from localhost.localdomain to hdpdemo.hortonworks.com
 
 [root@localhost ~]# cat /etc/sysconfig/network
 NETWORKING=yes
-HOSTNAME=hdpdemo.hortonworks.co
+HOSTNAME=hdpdemo.hortonworks.com
 </pre>
 
 + Download the following scripts. This helps in automated deployment of Ambari and its agents.
