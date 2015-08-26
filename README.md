@@ -221,7 +221,7 @@ Password: admin
 Click Next
 
 + Select Stack: Select the HDP 2.3 stack.
-![Screen Sho](https://www.dropbox.com/s/oh3m9km4zayrfhl/Screen%20Shot%202015-08-26%20at%208.52.11%20AM.png?dl=0)
+![Screen Shot](https://github.com/shivajid/hwx-isilon/blob/master/images/screen1.png)
 
 ### Install Options:
 
