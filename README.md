@@ -181,6 +181,13 @@ Assign a hostname to your machine (I will use hdpdemo.hortonworks.com)
 	$ vi /etc/hosts
 		Map the ipaddress in step a to the hostname
 	$ vi /etc/sysconfig/network
+	
+	vi /etc/sysconfig/network
+change hostname from localhost.localdomain to hdpdemo.hortonworks.com
+
+[root@localhost ~]# cat /etc/sysconfig/network
+NETWORKING=yes
+HOSTNAME=hdpdemo.hortonworks.co
 </pre>
 
 + Download the following scripts. This helps in automated deployment of Ambari and its agents.
