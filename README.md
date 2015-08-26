@@ -16,6 +16,11 @@ In this lab we are going to setup a non secure cluster with Isilon 7.2.0.4 and H
 
 This lab assumes that you have VMware Fusion installed on your laptop. If you do not have VMWare Fusion software, please download a 30 day trial version of the software.
 
+## Machine Requirements
+
+Your machine should have 16GB of RAM.
+
+
 ## Isilon Simulator
 
 Following steps are for setting up the simulator :-
@@ -159,6 +164,9 @@ In this step we will start creating the HDP Compute Cluster. We will create VM w
 ### OS setup
 
 #### Setup the CentOS VM.
+
+Assign CPU - 4cores
+Assign RAM - 10GB
 
 + Download the CentOS 6.7 Iso
 https://www.dropbox.com/s/njx0zwmic7og6db/CentOS-6.7-x86_64-bin-DVD1.iso?dl=0
