@@ -105,7 +105,7 @@ Create the users and directories
 
 <pre>
   hwxisi1-1# chmod + x isilon_create_user.sh
-  hwxisi1-1# ./isilon_create_user.sh <zonename>
+  hwxisi1-1# ./isilon_create_user.sh $zonename
 </pre>
 
 Extract the Isilon Hadoop Tools to your Isilon cluster. This can be placed in any directory under /ifs. It is recommended to use /ifs/isiloncluster1/scripts where isiloncluster1 is the name of your Isilon cluster·  
