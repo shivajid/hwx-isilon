@@ -254,7 +254,7 @@ Rest of the components are assigned to the Compute node (HDP Sandbox)
 
 + Change the port for webhdfs to 8082 under HDFS
 <pre>
-dfs.namenode.http-address = <hostname>:8082
+dfs.namenode.http-address = __REPLACE__hostname__:8082
 </pre>
 
 + Enter the password for all the required services
