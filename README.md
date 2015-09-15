@@ -118,7 +118,7 @@ Create the users and directories
 Extract the Isilon Hadoop Tools to your Isilon cluster. This can be placed in any directory under /ifs. It is recommended to use /ifs/isiloncluster1/scripts where isiloncluster1 is the name of your Isilon cluster·  
 
 Link to the Hadoop tools
-https://www.dropbox.com/s/stqhs7o5m59kb6e/isilon-hadoop-tools-20141120.tar.gz?dl=0
+https://github.com/claudiofahey/isilon-hadoop-tools/tree/master/onefs
 
 <pre> 	 
     hwxisi1-1# bash /ifs/isitest/scripts/isilon-hadoop-tools/onefs/isilon_create_directories.sh --dist hwx --fixperm --zone zonehdp
