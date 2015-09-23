@@ -48,7 +48,7 @@ Instructions to  apply the patch
 
 ### Step 3
 
-Please get your Isilon Lincense Keys (Hortonworks, check the in the internal box folder)
+Please get your Isilon Lincense Keys (Hortonworks team -  check the in the internal box folder)
 
 
 Please get a license key from your Isilon Representative
