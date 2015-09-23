@@ -48,11 +48,12 @@ Instructions to  apply the patch
 
 ### Step 3
 
-Install the 30 day temporary key for Isilon Simulator
+Please get your Isilon Lincense Keys (Hortonworks, check the in the internal box folder)
 
-+ Login to isilon simulator VM as a root user
 
 Please get a license key from your Isilon Representative
+
++ Login to isilon simulator VM as a root user
 
 <pre>
 isi license activate  __LICENSE_KEY__
@@ -108,17 +109,15 @@ hwxisi1-1# isi hdfs settings modify --default-block-size 128M
 
 Create the users and directories  
   
-+ Download the following script and execute it by passing the zonename - https://www.dropbox.com/s/ff0eaivlef8947m/isilon_create_user.sh?dl=0
++ Download the following script and execute it by passing the zonename -
++ +https://github.com/claudiofahey/isilon-hadoop-tools/tree/master/onefs
+
+Extract the Isilon Hadoop Tools to your Isilon cluster. This can be placed in any directory under /ifs. It is recommended to use /ifs/isiloncluster1/scripts where isiloncluster1 is the name of your Isilon cluster·
 
 <pre>
   hwxisi1-1# chmod + x isilon_create_user.sh
   hwxisi1-1# ./isilon_create_user.sh zonehdp
 </pre>
-
-Extract the Isilon Hadoop Tools to your Isilon cluster. This can be placed in any directory under /ifs. It is recommended to use /ifs/isiloncluster1/scripts where isiloncluster1 is the name of your Isilon cluster·  
-
-Link to the Hadoop tools
-https://github.com/claudiofahey/isilon-hadoop-tools/tree/master/onefs
 
 <pre> 	 
     hwxisi1-1# bash /ifs/isitest/scripts/isilon-hadoop-tools/onefs/isilon_create_directories.sh --dist hwx --fixperm --zone zonehdp
@@ -126,7 +125,8 @@ https://github.com/claudiofahey/isilon-hadoop-tools/tree/master/onefs
 
 Execute the following additonal steps for a temporary bug :-
 <pre>
-isi zone zones view zonehdp
+isi zone zones modify --user-mapping-rules="hdfs=>root" --
+zone zonehdp
 </pre>
 
 Get the ZoneID from the following
@@ -138,8 +138,12 @@ isi zone zones view zonehdp
 Replace the zoneid in the following command and execute it.
 
 <pre> 
-isi_run -z zoneid  "chown -R hdfs /ifs/isitest/zonehdp/hadoop
+isi_run -z  __REPLACE_zoneid  "chown -R hdfs /ifs/isitest/zonehdp/hadoop
 </pre> 
+
+## Note
+Create an additional user called "admin" in Isilon and make it part hadoop and hdfs group. This allows the user to have Hive view access via the Ambari UI.
+
 
 You will deploy Hortonworks HDP Hadoop using the standard process defined by Hortonworks. Ambari Server allows for the immediate usage of an Isilon cluster for all HDFS services (NameNode and DataNode), no reconfiguration will be necessary once the HDP install is completed.
 
@@ -193,6 +197,7 @@ Assign a hostname to your machine (I will use hdpdemo.hortonworks.com)
 	$ vi /etc/sysconfig/network
 	
 	vi /etc/sysconfig/network
+	
 change hostname from localhost.localdomain to hdpdemo.hortonworks.com
 
 [root@localhost ~]# cat /etc/sysconfig/network
@@ -254,7 +259,8 @@ Rest of the components are assigned to the Compute node (HDP Sandbox)
 
 ### Customize the services
 
-+ Change the port for webhdfs to 8082 under HDFS
++ Change the port for webhdfs to 8082 under HDFS. The default address is 50070.
+
 <pre>
 dfs.namenode.http-address = __REPLACE__hostname__:8082
 </pre>
@@ -269,7 +275,6 @@ dfs.namenode.http-address = __REPLACE__hostname__:8082
 
 Login to Ambari using admin/admin
 Under MapReduce, run the “Service Check”
-
 
 
 # Thank You!
