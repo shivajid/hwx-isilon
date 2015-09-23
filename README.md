@@ -107,20 +107,20 @@ hwxisi1-1# isi hdfs settings modify --server-threads 256
 hwxisi1-1# isi hdfs settings modify --default-block-size 128M
 </pre>
 
-Create the users and directories  
+### Create the users and directories  
   
-+ Download the following script and execute it by passing the zonename -
+Please download the scripts from Claudio's github account
 + +https://github.com/claudiofahey/isilon-hadoop-tools/tree/master/onefs
 
-Extract the Isilon Hadoop Tools to your Isilon cluster. This can be placed in any directory under /ifs. It is recommended to use /ifs/isiloncluster1/scripts where isiloncluster1 is the name of your Isilon cluster·
+Extract the Isilon Hadoop Tools to your Isilon cluster. This can be placed in any directory under /ifs/isitest/scripts. If the directory does not exists, please create it and give it the right permissions.
 
-<pre>
-  hwxisi1-1# chmod + x isilon_create_user.sh
-  hwxisi1-1# ./isilon_create_user.sh zonehdp
-</pre>
++ Execute the scripts
 
 <pre> 	 
-    hwxisi1-1# bash /ifs/isitest/scripts/isilon-hadoop-tools/onefs/isilon_create_directories.sh --dist hwx --fixperm --zone zonehdp
+    hwxisi1-1# bash /ifs/isitest/scripts/isilon-hadoop-tools/onefs/isilon_create_users.sh --dist hwx --startgid 501 --startuid 501 --zone zonehdp
+    
+    
+     hwxisi1-1# bash /ifs/isitest/scripts/isilon-hadoop-tools/onefs/isilon_create_directories.sh --dist hwx --fixperm --zone zonehdp
 </pre>
 
 Execute the following additonal steps for a temporary bug :-
